@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/user")
 public class UserController {
 
-
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -32,7 +31,7 @@ public class UserController {
         noPassUser.setPassword("");
         return noPassUser;
     }
-    
+
     @PutMapping("/change/password")
     public User editUser(@AuthenticationPrincipal MyUserDetails caller, @RequestBody User edited) {
         caller.getUser().changePassword(edited.getPassword());
