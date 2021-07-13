@@ -1,6 +1,7 @@
 package com.SpringSecurity.Spring.Security.Model;
 
-import org.hibernate.annotations.Columns;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -108,5 +109,10 @@ public class User {
 
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public void changePassword(String password) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        this.password = passwordEncoder.encode(password);
     }
 }
