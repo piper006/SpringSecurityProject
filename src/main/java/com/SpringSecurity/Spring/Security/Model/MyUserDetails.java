@@ -32,26 +32,6 @@ public class MyUserDetails implements UserDetails {
         return user;
     }
 
-    public boolean roleExists(String roleName){
-        for (Role role :
-                user.getRoles()) {
-            if (role.getRoleName().equals(roleName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isAdmin(){
-        for (Role role :
-                user.getRoles()) {
-            if (role.getRoleName().equals("ROLE_ADMIN")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public String getPassword() {
         return user.getPassword();

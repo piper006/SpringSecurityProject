@@ -30,34 +30,15 @@ public class UserController {
         }
         return userRepository.save(user);
     }
-    @GetMapping("/{username}")
-    public User retrieveUser(@AuthenticationPrincipal MyUserDetails owner, @PathVariable String username) throws Exception {
-        User noPassUser = new User();
-        if(owner.getUsername().equals(username) || owner.isAdmin()) {
-            noPassUser = userRepository.getUserByUsername(username);
-            noPassUser.setPassword("");
-        }else
-            throw new Exception("Your are not the same person");
+
+    @GetMapping("/info")
+    public User retrieveUser(@AuthenticationPrincipal MyUserDetails caller) {
+        User noPassUser = userRepository.getUserByUsername(caller.getUsername());
+        noPassUser.setPassword("");
         return noPassUser;
     }
 
 
-    @PutMapping("/add/role/{username}")
-    public User addUserRole(@PathVariable String username, @RequestBody Role role) throws Exception {
-        User user;
-        Role roleFound;
-        if(userRepository.existsByUsername(username)){
-            user = userRepository.getUserByUsername(username);
-        }else
-            throw new Exception(String.format("There was not a user with %s as username",username));
-
-        if(roleRepository.existsByRoleName(role.getRoleName())){
-            roleFound = roleRepository.getByRoleName(role.getRoleName());
-        }else
-            throw new Exception(String.format("There was not a role with %s name",role.getRoleName()));
-        user.addRole(roleFound);
-        return userRepository.save(user);
-    }
 
 
 }
