@@ -1,7 +1,8 @@
 package com.SpringSecurity.Spring.Security.Model;
 
+
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.Set;

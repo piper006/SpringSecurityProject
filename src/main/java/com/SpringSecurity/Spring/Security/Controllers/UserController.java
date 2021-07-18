@@ -6,7 +6,10 @@ import com.SpringSecurity.Spring.Security.Repositories.RoleRepository;
 import com.SpringSecurity.Spring.Security.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(path = "/user")
@@ -38,5 +41,11 @@ public class UserController {
         return userRepository.save(caller.getUser());
     }
 
+    @GetMapping("/error")
+    public String error(HttpServletRequest request) {
+        String message = (String) request.getSession().getAttribute("error.message");
+        request.getSession().removeAttribute("error.message");
+        return message;
+    }
 
 }
