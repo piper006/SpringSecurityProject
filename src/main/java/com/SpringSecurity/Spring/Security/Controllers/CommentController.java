@@ -22,11 +22,11 @@ public class CommentController {
     private ArticleRepository articleRepository;
 
     @PostMapping("/new/{articleId}")
-    public Comment commentArticle(@AuthenticationPrincipal MyUserDetails commenter,
+    public Comment commentArticle(@AuthenticationPrincipal MyUserDetails caller,
                                   @PathVariable UUID articleId,
                                   @RequestBody Comment comment) {
 
-        comment.setUser(commenter.getUser());
+        comment.setUser(caller.getUser());
         commentRepository.save(comment);
         Article commentedArticle = articleRepository.getArticleByArticleId(articleId);
         commentedArticle.addNewComment(comment);
@@ -35,10 +35,10 @@ public class CommentController {
     }
 
     @PostMapping("/new/comment/{commentId}")
-    public Comment commentOnComment(@AuthenticationPrincipal MyUserDetails commenter,
+    public Comment commentOnComment(@AuthenticationPrincipal MyUserDetails caller,
                                   @PathVariable UUID commentId,
                                   @RequestBody Comment comment) {
-        comment.setUser(commenter.getUser());
+        comment.setUser(caller.getUser());
         Comment commentToBeCommented = commentRepository.getCommentByCommentId(commentId);
         commentToBeCommented.addNewComment(comment);
 
